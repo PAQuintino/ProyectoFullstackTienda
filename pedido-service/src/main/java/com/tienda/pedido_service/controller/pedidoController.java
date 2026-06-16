@@ -67,4 +67,11 @@ public class pedidoController {
         return pedidoService.obtenerProductoMono(productoId)
                 .map(ResponseEntity::ok);
     }
+
+    @GetMapping("/cliente/{clienteId}")
+    public ResponseEntity<List<Pedido>> obtenerPedidosCliente(
+        @PathVariable Long clienteId) {
+        return ResponseEntity.ok(
+                pedidoService.buscarPorClienteId(clienteId));
+    }
 }
