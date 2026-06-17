@@ -1,0 +1,146 @@
+version: "3.8"
+
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: tienda-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - tienda-network
+
+  cliente-service:
+    build: ./cliente-service
+    container_name: cliente-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - tienda-network
+
+  producto-service:
+    build: ./producto-service
+    container_name: producto-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - tienda-network
+
+  inventario-service:
+    build: ./inventario-service
+    container_name: inventario-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - tienda-network
+
+  pedido-service:
+    build: ./pedido-service
+    container_name: pedido-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - tienda-network
+
+  pago-service:
+    build: ./pago-service
+    container_name: pago-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - tienda-network
+
+  autenticacion-service:
+    build: ./autenticacion-service
+    container_name: autenticacion-service
+    ports:
+      - "8086:8086"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - tienda-network
+
+  notificacion-service:
+    build: ./notificacion-service
+    container_name: notificacion-service
+    ports:
+      - "8087:8087"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - tienda-network
+
+  auditoria-service:
+    build: ./auditoria-service
+    container_name: auditoria-service
+    ports:
+      - "8088:8088"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - tienda-network
+
+  reporte-service:
+    build: ./reporte-service
+    container_name: reporte-service
+    ports:
+      - "8089:8089"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - tienda-network
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - cliente-service
+      - producto-service
+      - inventario-service
+      - pedido-service
+      - pago-service
+      - autenticacion-service
+      - notificacion-service
+      - auditoria-service
+      - reporte-service
+    networks:
+      - tienda-network
+
+networks:
+  tienda-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
