@@ -25,7 +25,7 @@ services:
     build: ./cliente-service
     container_name: cliente-service
     ports:
-      - "8081:8081"
+      - "8091:8091"
     depends_on:
       mysql:
         condition: service_healthy
@@ -36,7 +36,7 @@ services:
     build: ./producto-service
     container_name: producto-service
     ports:
-      - "8082:8082"
+      - "8092:8092"
     depends_on:
       mysql:
         condition: service_healthy
@@ -47,7 +47,7 @@ services:
     build: ./inventario-service
     container_name: inventario-service
     ports:
-      - "8083:8083"
+      - "8093:8093"
     depends_on:
       mysql:
         condition: service_healthy
@@ -58,7 +58,7 @@ services:
     build: ./pedido-service
     container_name: pedido-service
     ports:
-      - "8084:8084"
+      - "8094:8094"
     depends_on:
       mysql:
         condition: service_healthy
@@ -69,7 +69,7 @@ services:
     build: ./pago-service
     container_name: pago-service
     ports:
-      - "8085:8085"
+      - "8095:8095"
     depends_on:
       mysql:
         condition: service_healthy
@@ -80,7 +80,7 @@ services:
     build: ./autenticacion-service
     container_name: autenticacion-service
     ports:
-      - "8086:8086"
+      - "8096:8096"
     depends_on:
       mysql:
         condition: service_healthy
@@ -91,7 +91,7 @@ services:
     build: ./notificacion-service
     container_name: notificacion-service
     ports:
-      - "8087:8087"
+      - "8097:8097"
     depends_on:
       mysql:
         condition: service_healthy
@@ -102,7 +102,7 @@ services:
     build: ./auditoria-service
     container_name: auditoria-service
     ports:
-      - "8088:8088"
+      - "8098:8098"
     depends_on:
       mysql:
         condition: service_healthy
@@ -113,7 +113,7 @@ services:
     build: ./reporte-service
     container_name: reporte-service
     ports:
-      - "8089:8089"
+      - "8099:8099"
     depends_on:
       mysql:
         condition: service_healthy
@@ -124,7 +124,7 @@ services:
     build: ./api-gateway
     container_name: api-gateway
     ports:
-      - "8080:8080"
+      - "8090:8090"
     depends_on:
       - cliente-service
       - producto-service
