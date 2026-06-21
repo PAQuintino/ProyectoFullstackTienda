@@ -6,6 +6,7 @@ import com.tienda.inventario_service.service.InventarioService;
 import com.tienda.inventario_service.repository.StockRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Mono;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -20,12 +21,14 @@ public class InventarioController {
     private final StockRepository stockRepository;
 
     @PostMapping("/stock")
-    public ResponseEntity<StockResponseDTO> registrarStock(@Valid @RequestBody Stock stock) {
-        Stock guardado = inventarioService.registrarStock(stock);
-        StockResponseDTO response = new StockResponseDTO();
-        response.setId(guardado.getId());
-        response.setCantidad(guardado.getCantidad());
-        return ResponseEntity.ok(response);
+    public Mono<ResponseEntity<StockResponseDTO>> registrarStock(@Valid @RequestBody Stock stock) {
+        return inventarioService.registrarStock(stock)
+                .map(guardado -> {
+                    StockResponseDTO response = new StockResponseDTO();
+                    response.setId(guardado.getId());
+                    response.setCantidad(guardado.getCantidad());
+                    return ResponseEntity.ok(response);
+                });
     }
 
     @GetMapping
