@@ -28,7 +28,7 @@ public class ClienteModelAssembler implements RepresentationModelAssembler<Clien
                 ).withRel("clientes"),
 
                 Link.of(
-                        "http://localhost:8084/api/pedidos/cliente/" + cliente.getId(),
+                        "http://localhost:8094/api/pedidos/cliente/" + cliente.getId(),
                         "pedidos"));
         }
 }

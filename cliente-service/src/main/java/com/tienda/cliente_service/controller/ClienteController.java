@@ -15,22 +15,22 @@ public class ClienteController {
 
     private final ClienteService clienteService;
 
-    @PostMapping
+    @PostMapping//
     public ResponseEntity<Cliente> guardar(@Valid @RequestBody Cliente cliente) {
         return ResponseEntity.status(201).body(clienteService.guardarCliente(cliente));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Cliente> obtenerPorId(@PathVariable Long id) {
+    @GetMapping("/{id}")//
+    public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(clienteService.buscarPorId(id));
     }
 
-    @GetMapping
+    @GetMapping//
     public ResponseEntity<List<Cliente>> listarTodos() {
         return ResponseEntity.ok(clienteService.listarTodos());
     }
 
-    @GetMapping("/{id}/exists")
+    @GetMapping("/{id}/exists")//
     public ResponseEntity<Boolean> existe(@PathVariable Long id) {
         return ResponseEntity.ok(clienteService.existe(id));
     }

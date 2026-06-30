@@ -33,6 +33,10 @@ spring:
           uri: http://autenticacion-service:8096
           predicates:
             - Path=/api/usuarios/**
+        - id: auth-service
+          uri: http://autenticacion-service:8096
+          predicates:
+          - Path=/api/auth/**
         - id: notificacion-service
           uri: http://notificacion-service:8097
           predicates:
